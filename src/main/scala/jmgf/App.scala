@@ -5,5 +5,5 @@ package jmgf
  *
  */
 object App extends Application {
-  println( "Hello Worlddd" )
+  println( "Hello World" )
 }
