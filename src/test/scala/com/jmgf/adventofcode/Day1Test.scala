@@ -10,4 +10,8 @@ class Day1Test extends FlatSpec with Matchers {
   it should "generate day 1 part 1" in {
     assert(Day1.part1(inputs).equals(514579))
   }
+
+  it should "generate day 1 part 2" in {
+    assert(Day1.part2(inputs).equals(241861950))
+  }
 }

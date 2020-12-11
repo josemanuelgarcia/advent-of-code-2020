@@ -23,5 +23,14 @@ object Day1 extends Puzzle[Seq[Int], Int, Int] {
     uniquePairs.head
   }
 
-  override def part2(inputs: Seq[Int]): Int = inputs.sum
+  override def part2(inputs: Seq[Int]): Int = {
+    val uniquePairs = for {
+      (x, idxX) <- inputs.zipWithIndex
+      (y, idxY) <- inputs.zipWithIndex
+      (z, idxZ) <- inputs.zipWithIndex
+      if idxX != idxY && idxX != idxZ && x+y+z == 2020
+    } yield x * y * z
+
+    uniquePairs.head
+  }
 }
