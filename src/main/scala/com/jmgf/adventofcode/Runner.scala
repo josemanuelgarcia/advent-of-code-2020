@@ -6,7 +6,8 @@ object Runner extends App {
 
   val puzzles: Map[Int, Puzzle[_, _, _]] = Map(
     1 -> Day1,
-    2 -> Day2
+    2 -> Day2,
+    3 -> Day3
   )
 
 
