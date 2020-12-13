@@ -1,5 +1,6 @@
 package com.jmgf.adventofcode
 
+import com.jmgf.adventofcode.puzzle.Day1
 import org.scalatest.{FlatSpec, Matchers}
 
 

@@ -1,5 +1,6 @@
-package com.jmgf.adventofcode
+package com.jmgf.adventofcode.puzzle
 
+import com.jmgf.adventofcode.Puzzle
 import com.jmgf.adventofcode.util.File
 
 import scala.util.Try
