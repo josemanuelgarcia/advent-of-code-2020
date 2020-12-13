@@ -10,18 +10,20 @@ object Day6 extends Puzzle[Seq[String], Int, Int]{
   override def parse(resource: String): Seq[String] =
     File.readResource(resource).flatMap(row => Try(row.toString).toOption)
 
-  override def part1(inputs: Seq[String]): Int = {
-    processInput(inputs).map(_.trim.toCharArray.distinct.length).sum
-  }
+  override def part1(inputs: Seq[String]): Int =
+    processInput(inputs).map(_.mkString("")).map(_.trim.toCharArray.distinct.length).sum
 
-  override def part2(inputs: Seq[String]): Int = 0
 
-  def processInput(inputs: Seq[String]): List[String] = {
+  override def part2(inputs: Seq[String]): Int =
+    processInput(inputs).map(_.map(_.trim.toCharArray)).map(_.reduceLeft(_.intersect(_)).length).sum
+
+
+  def processInput(inputs: Seq[String]): List[List[String]] = {
     val newSeq = inputs.map(a => {
       if (a.length < 1) "SEPARATOR"
       else a
     })
-    splitBySeparator(newSeq.toList, "SEPARATOR").map(_.mkString(""))
+    splitBySeparator(newSeq.toList, "SEPARATOR")
   }
 
   def splitBySeparator[T](l: List[T], sep: T): List[List[T]] = {
@@ -30,4 +32,6 @@ object Day6 extends Puzzle[Seq[String], Int, Int]{
       case (hd, _) => List(hd)
     }
   }
+
+
 }
