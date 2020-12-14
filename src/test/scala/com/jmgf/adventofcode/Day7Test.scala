@@ -16,13 +16,22 @@ class Day7Test extends FlatSpec with Matchers {
     "faded blue bags contain no other bags.",
     "dotted black bags contain no other bags."
   )
+  val inputsPart2: Seq[String] = Seq(
+    "shiny gold bags contain 2 dark red bags.",
+    "dark red bags contain 2 dark orange bags.",
+    "dark orange bags contain 2 dark yellow bags.",
+    "dark yellow bags contain 2 dark green bags.",
+    "dark green bags contain 2 dark blue bags.",
+    "dark blue bags contain 2 dark violet bags.",
+    "dark violet bags contain no other bags."
+  )
 
   it should "generate day 7 part 1" in {
     assert(Day7.part1(inputs).equals(4))
   }
 
   it should "generate day 7 part 2" in {
-    assert(Day7.part2(inputs).equals(32))
+    assert(Day7.part2(inputsPart2).equals(126))
   }
 
 
