@@ -12,7 +12,6 @@ object Day7 extends Puzzle[Seq[String], Int, Int]{
   override def parse(resource: String): Seq[String] =
     File.readResource(resource).flatMap(row => Try(row.toString).toOption)
 
-
   override def part1(inputs: Seq[String]): Int = {
     val graph = parseInput(inputs)
     searchOccurrences(graph, "shiny gold")
