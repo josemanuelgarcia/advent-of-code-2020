@@ -13,7 +13,7 @@ class Day10Test extends FlatSpec with Matchers {
   }
 
   it should "generate day 10 part 2" in {
-    assert(Day10.part2(inputs).equals(0))
+    assert(Day10.part2(inputs).equals(19208))
   }
 
 }
