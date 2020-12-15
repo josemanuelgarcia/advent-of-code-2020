@@ -32,7 +32,7 @@ object Day15 extends Puzzle[Seq[Int], Int, Int] {
       val lastNumber = gameSeq.last
       if (gameSeq.count(_ == lastNumber) == 1) gameSeq = gameSeq :+ 0
       else {
-        val a = gameSeq.dropRight(1).indices.filter(pos => gameSeq(pos) == lastNumber).max
+        val a = gameSeq.dropRight(1).indices.find(pos => gameSeq(pos) == lastNumber).max
         gameSeq = gameSeq :+ (gameSeq.length - (a + 1))
       }
     }
