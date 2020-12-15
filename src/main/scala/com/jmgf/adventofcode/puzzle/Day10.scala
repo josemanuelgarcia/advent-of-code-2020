@@ -14,8 +14,8 @@ object Day10 extends Puzzle[Seq[Int], Int, Int] {
     File.readResource(resource).flatMap(row => Try(row.toInt).toOption)
 
   override def part1(inputs: Seq[Int]): Int = {
-    val sorted = 0 +: inputs.sorted
-    val joltDifferences = sorted.zip(sorted.drop(1)).map({case(a, b) => b - a}) :+ 3
+    val sorted = 0 +: inputs.sorted :+ (inputs.max + 3)
+    val joltDifferences = sorted.zip(sorted.drop(1)).map({case(a, b) => b - a})
    joltDifferences.count(_.equals(1)) * joltDifferences.count(_.equals(3))
   }
 
