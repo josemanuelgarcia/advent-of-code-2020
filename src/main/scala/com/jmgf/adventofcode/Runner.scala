@@ -17,7 +17,7 @@ object Runner extends App {
     8 -> Day8,
     9 -> Day9,
     10 -> Day10,
-    11 -> Day11,
+    // 11 -> Day11,
     13 -> Day13
   )
   def runAll(): Unit = {

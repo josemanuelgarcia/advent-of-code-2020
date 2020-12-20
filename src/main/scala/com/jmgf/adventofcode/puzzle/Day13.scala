@@ -30,6 +30,20 @@ object Day13 extends Puzzle[Seq[String], Int, Int] {
     (earliestTimestampDepart - timeDeparture) * earliestBus
   }
 
-  override def part2(inputs: Seq[String]): Int = 0
+  override def part2(inputs: Seq[String]): Int = {
+    val sequence: Seq[String] = inputs.last.split(",")
+    val buses: Seq[(Int, Int)] = sequence.filterNot(_.equals("x")).map(bus => (bus.toInt, sequence.indexOf(bus)))
+    val interval = buses.map(_._1).min
+    var earliestTimestampDepart = interval
+    var found = false
+
+    while (!found) {
+      val conditions = buses.count(bus => (earliestTimestampDepart + bus._2) % bus._1 == 0)
+      if(conditions == buses.length)
+        found = true
+      else earliestTimestampDepart += interval
+    }
+    earliestTimestampDepart + sequence.length - 1
+  }
 
 }
