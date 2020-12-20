@@ -26,11 +26,28 @@ object Day12 extends Puzzle[Seq[(String, Int)], Int, Int] {
         direction = turnLeft(direction, action._2)
       }
     })
-
-    (position("E") - position("W")).abs + (position("N") - position("S")).abs
+    getManhatanDistance(position)
   }
 
-  override def part2(inputs: Seq[(String, Int)]): Int = 0
+  override def part2(inputs: Seq[(String, Int)]): Int = {
+    var waypoint = Map("E" -> 10, "N" -> 1)
+    var position = Map("E" -> 0, "W" -> 0, "N" -> 0, "S" -> 0)
+
+    inputs.foreach(action=> {
+      if(position.keySet.contains(action._1)) {
+        waypoint += (action._1 -> (waypoint(action._1) + action._2))
+      } else if (action._1 == "F") {
+        waypoint.foreach(pair=> {
+          position += (pair._1 -> (position(pair._1) * action._2))
+        })
+      } else if (action._1 == "R") {
+        // direction = turnRight(direction, action._2)
+      } else {
+        // direction = turnLeft(direction, action._2)
+      }
+    })
+    getManhatanDistance(position)
+  }
 
 
   private def turnLeft(actualDirection: String, degrees: Int): String = {
@@ -55,6 +72,10 @@ object Day12 extends Puzzle[Seq[(String, Int)], Int, Int] {
     if(nextPosition > 3) directions(nextPosition - 4)
     else directions(nextPosition)
 
+  }
+
+  private def getManhatanDistance(position: Map[String, Int]) : Int = {
+    (position("E") - position("W")).abs + (position("N") - position("S")).abs
   }
 
 }

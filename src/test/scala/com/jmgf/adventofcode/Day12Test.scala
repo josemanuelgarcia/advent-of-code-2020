@@ -17,7 +17,7 @@ class Day12Test extends FlatSpec with Matchers {
   }
 
   it should "generate day 12 part 2" in {
-    assert(Day12.part2(inputs).equals(0))
+    assert(Day12.part2(inputs).equals(286))
   }
 
 }
