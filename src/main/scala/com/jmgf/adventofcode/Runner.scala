@@ -17,9 +17,12 @@ object Runner extends App {
     8 -> Day8,
     9 -> Day9,
     10 -> Day10,
-    // 11 -> Day11,
+    11 -> Day11,
+    12 -> Day12,
     13 -> Day13
   )
+
+
   def runAll(): Unit = {
     puzzles.foreach(pzz => {
       println(s"Solving puzzle for Day ${pzz._1}")
