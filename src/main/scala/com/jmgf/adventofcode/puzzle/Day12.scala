@@ -29,27 +29,6 @@ object Day12 extends Puzzle[Seq[(String, Int)], Int, Int] {
     getManhatanDistance(position)
   }
 
-  override def part2(inputs: Seq[(String, Int)]): Int = {
-    var waypoint = Map("E" -> 10, "N" -> 1)
-    var position = Map("E" -> 0, "W" -> 0, "N" -> 0, "S" -> 0)
-
-    inputs.foreach(action=> {
-      if(position.keySet.contains(action._1)) {
-        waypoint += (action._1 -> (waypoint(action._1) + action._2))
-      } else if (action._1 == "F") {
-        waypoint.foreach(pair=> {
-          position += (pair._1 -> (position(pair._1) * action._2))
-        })
-      } else if (action._1 == "R") {
-        // direction = turnRight(direction, action._2)
-      } else {
-        // direction = turnLeft(direction, action._2)
-      }
-    })
-    getManhatanDistance(position)
-  }
-
-
   private def turnLeft(actualDirection: String, degrees: Int): String = {
     val directions = Seq("N", "E", "S", "W")
     val index = directions.indexOf(actualDirection)
@@ -73,6 +52,96 @@ object Day12 extends Puzzle[Seq[(String, Int)], Int, Int] {
     else directions(nextPosition)
 
   }
+
+  override def part2(inputs: Seq[(String, Int)]): Int = {
+    var waypoint = Map("E" -> 10, "N" -> 1)
+    var position = Map("E" -> 0, "W" -> 0, "N" -> 0, "S" -> 0)
+
+    inputs.foreach(action=> {
+      if(position.keySet.contains(action._1)) {
+        if(waypoint.keySet.contains(action._1))
+          waypoint += (action._1 -> (waypoint(action._1) + action._2))
+        else {
+          if(action._1.equals("N")) {
+            if(waypoint("S") < action._2){
+              waypoint += ("N" -> (action._2 - waypoint("S")))
+              waypoint -= "S"
+            }
+            else waypoint += ("S" -> (waypoint("S") - action._2))
+          } else if (action._1.equals("S")) {
+            if(waypoint("N") < action._2){
+              waypoint += ("S" -> (action._2 - waypoint("N")))
+              waypoint -= "N"
+
+            }
+            else waypoint += ("N" -> (waypoint("N") - action._2))
+          } else if(action._1.equals("E")) {
+            if (waypoint("W") < action._2) {
+              waypoint += ("E" -> (action._2 - waypoint("W")))
+              waypoint -= "W"
+            }
+            else waypoint += ("W" -> (waypoint("W") - action._2))
+          } else {
+            if (waypoint("E") < action._2) {
+              waypoint += ("W" -> (action._2 - waypoint("E")))
+              waypoint -= "E"
+            }
+            else waypoint += ("E" -> (waypoint("E") - action._2))
+          }
+        }
+      } else if (action._1 == "F") {
+        waypoint.foreach(pair => {
+          position += (pair._1 -> (position(pair._1) + waypoint(pair._1) * action._2))
+        })
+      } else if (action._1 == "L") {
+        waypoint = turnLeftWaypoint(waypoint, action._2)
+      } else {
+        waypoint = turnRightWaypoint(waypoint, action._2)
+      }
+    })
+    getManhatanDistance(position)
+  }
+
+  private def turnLeftWaypoint(waypoint: Map[String, Int], degrees: Int): Map[String, Int] = {
+    if(degrees == 0) waypoint
+    else {
+      if(waypoint.keySet.contains("N")) {
+        if(waypoint.keySet.contains("W")) {
+          turnLeftWaypoint(Map("S" -> waypoint("W"), "W" -> waypoint("N")), degrees - 90)
+        } else {
+          turnLeftWaypoint(Map("W" -> waypoint("N"), "N" -> waypoint("E")), degrees - 90)
+        }
+      } else {
+        if(waypoint.keySet.contains("W")) {
+          turnLeftWaypoint(Map("S" -> waypoint("W"), "E" -> waypoint("S")), degrees - 90)
+        } else {
+          turnLeftWaypoint(Map("N" -> waypoint("E"), "E" -> waypoint("S")), degrees - 90)
+        }
+      }
+    }
+  }
+
+  private def turnRightWaypoint(waypoint: Map[String, Int], degrees: Int): Map[String, Int] = {
+    if(degrees == 0) waypoint
+    else {
+      if(waypoint.keySet.contains("N")) {
+        if(waypoint.keySet.contains("W")) {
+          turnRightWaypoint(Map("N" -> waypoint("W"), "E" -> waypoint("N")), degrees - 90)
+        } else {
+          turnRightWaypoint(Map("E" -> waypoint("N"), "S" -> waypoint("E")), degrees - 90)
+        }
+      } else {
+        if(waypoint.keySet.contains("W")) {
+          turnRightWaypoint(Map("N" -> waypoint("W"), "W" -> waypoint("S")), degrees - 90)
+        } else {
+          turnRightWaypoint(Map("W" -> waypoint("S"), "S" -> waypoint("E")), degrees - 90)
+        }
+      }
+    }
+  }
+
+
+
 
   private def getManhatanDistance(position: Map[String, Int]) : Int = {
     (position("E") - position("W")).abs + (position("N") - position("S")).abs
