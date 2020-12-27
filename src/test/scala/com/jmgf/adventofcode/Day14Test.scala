@@ -12,12 +12,19 @@ class Day14Test extends FlatSpec with Matchers {
     "mem[8] = 0"
   )
 
+  val inputs2: Seq[String] = Seq(
+    "mask = 000000000000000000000000000000X1001X",
+    "mem[42] = 100",
+    "mask = 00000000000000000000000000000000X0XX",
+    "mem[26] = 1"
+  )
+
   it should "generate day 14 part 1" in {
     assert(Day14.part1(inputs).equals(165))
   }
 
   it should "generate day 14 part 2" in {
-    assert(Day14.part2(inputs).equals(0))
+    assert(Day14.part2(inputs2).equals(208))
   }
 
 }
